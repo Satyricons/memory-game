@@ -1,5 +1,11 @@
-import { createDeck } from './game.js';
+import { createHeader, createStats } from './ui.js';
 
 console.log('Memory Game: main.js загружен');
-const deck = createDeck();
-console.log('id порядок:', deck.map(c => c.id));
+
+document.body.append(
+  createHeader({
+    onNewGame: () => console.log('new game'),
+    onShowLeaderboard: () => console.log('leaderboard'),
+  }),
+  createStats()
+);
