@@ -51,3 +51,41 @@ export function createStats() {
     children: [moves, pairs],
   });
 }
+
+export function createBoard() {
+  return createElement('div', {
+    className: 'board',
+    attrs: { 'data-role': 'board' },
+  });
+}
+
+/**
+ * Одна карточка: рубашка + лицо с эмодзи.
+ * @param {{ id: number, emoji: string }} card
+ * @returns {HTMLElement}
+ */
+export function createCard(card) {
+  const back = createElement('div', {
+    className: 'card__face card__face--back',
+    textContent: '?',
+  });
+
+  const front = createElement('div', {
+    className: 'card__face card__face--front',
+    textContent: card.emoji,
+  });
+
+  return createElement('div', {
+    className: 'card',
+    attrs: { 'data-id': String(card.id) },
+    children: [back, front],
+  });
+}
+
+export function renderBoard(deck) {
+  const board = document.querySelector('[data-role="board"]');
+  if (!board) return;
+
+  const cards = deck.map(createCard);
+  board.append(...cards);
+}
