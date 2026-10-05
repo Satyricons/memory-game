@@ -104,7 +104,7 @@ function finishGame() {
 
   const content = createElement('p', {
     className: 'win-message',
-    textContent: `Вы нашли все пары за ${state.moves} ходов!`,
+    textContent: `Вы нашли все пары! Ходов: ${state.moves}`,
   });
 
   openModal({
@@ -129,7 +129,32 @@ function finishGame() {
 
 // ---------- Кнопки хедера ----------
 function handleNewGame() {
-  console.log('new game — TODO');
+  // 1. Отменяем таймер
+  if (state.mismatchTimerId !== null) {
+    clearTimeout(state.mismatchTimerId);
+    state.mismatchTimerId = null;
+  }
+
+  // 2. Закрываем модалку
+  closeModal();
+
+  // 3. Новая колода
+  state.deck = createDeck();
+  state.moves = 0;
+  state.matched = 0;
+  state.firstCard = null;
+  state.isLocked = false;
+  state.isFinished = false;
+
+  // 4. Очищаем board
+  const boardEl = document.querySelector('[data-role="board"]');
+  boardEl.replaceChildren();   // удаляет всех детей разом
+
+  // 5. Рисуем заново
+  renderBoard(state.deck);
+
+  // 6. Обновляем счётчики
+  updateStats(state.moves, state.matched);
 }
 
 function handleLeaderboard() {
