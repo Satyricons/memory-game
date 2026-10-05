@@ -1,0 +1,185 @@
+/* styles/style.css */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #1e1e2e;
+  color: #eee;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  gap: 12px;
+}
+
+.header__btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4a4aff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.header__btn:hover {
+  background: #6a6aff;
+}
+
+/* ---------- Stats ---------- */
+.stats {
+  display: flex;
+  gap: 24px;
+  font-size: 18px;
+}
+
+/* ---------- Board ---------- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
+  gap: 12px;
+  perspective: 1000px; /* для 3D-переворота */
+}
+
+/* ---------- Card ---------- */
+.card {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.card--flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  border-radius: 12px;
+  backface-visibility: hidden; /* скрывает «спину» при повороте */
+}
+
+.card__face--back {
+  background: #3a3a5c;
+  color: #aaa;
+}
+
+.card__face--front {
+  background: #fff;
+  transform: rotateY(180deg); /* изначально повёрнуто «спиной» к нам */
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal {
+  background: #2a2a3e;
+  color: #eee;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal__title {
+  margin-bottom: 16px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.modal__body {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal__footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal__btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #555;
+  color: #eee;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.modal__btn:hover {
+  background: #666;
+}
+
+.modal__btn--primary {
+  background: #4a4aff;
+}
+
+.modal__btn--primary:hover {
+  background: #6a6aff;
+}
+
+.win-message {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 8px 12px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+}
+
+.leaderboard th {
+  font-weight: 600;
+  color: #aaa;
+}
+
+.leaderboard__empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 16px;
+}
