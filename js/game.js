@@ -32,3 +32,16 @@ export function createDeck() {
 
   return shuffle(deck);
 }
+
+
+export function createGameState(deck) {
+  return {
+    deck,
+    moves: 0,
+    matched: 0,
+    firstCard: null,
+    isLocked: false,
+    isFinished: false,
+    mismatchTimerId: null,
+  };
+}

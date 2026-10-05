@@ -89,3 +89,29 @@ export function renderBoard(deck) {
   const cards = deck.map(createCard);
   board.append(...cards);
 }
+
+/** функция переворота */
+
+export function flipCardElement(cardId, flipped) {
+  const el = document.querySelector(`.card[data-id="${cardId}"]`);
+  if (!el) return;
+  el.classList.toggle('card--flipped', flipped);
+}
+
+/**
+ * Обновляет счётчики ходов и пар в DOM.
+ * @param {number} moves
+ * @param {number} matched
+ */
+export function updateStats(moves, matched) {
+  const movesEl = document.querySelector('[data-role="moves"]');
+  const pairsEl = document.querySelector('[data-role="pairs"]');
+
+  if (movesEl) {
+    movesEl.textContent = `Ходы: ${moves}`;
+  }
+
+  if (pairsEl) {
+    pairsEl.textContent = `Пары: ${matched} / ${TOTAL_PAIRS}`;
+  }
+}
