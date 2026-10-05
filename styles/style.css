@@ -89,3 +89,73 @@ body {
   background: #fff;
   transform: rotateY(180deg); /* изначально повёрнуто «спиной» к нам */
 }
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal {
+  background: #2a2a3e;
+  color: #eee;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal__title {
+  margin-bottom: 16px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.modal__body {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal__footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal__btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #555;
+  color: #eee;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.modal__btn:hover {
+  background: #666;
+}
+
+.modal__btn--primary {
+  background: #4a4aff;
+}
+
+.modal__btn--primary:hover {
+  background: #6a6aff;
+}
+
+.win-message {
+  font-size: 18px;
+  line-height: 1.5;
+}

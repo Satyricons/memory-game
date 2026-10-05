@@ -8,6 +8,8 @@ import {
   updateStats,
 } from './ui.js';
 import { MISMATCH_DELAY, TOTAL_PAIRS } from './constants.js';
+import { openModal, closeModal } from './modal.js';
+import { createElement } from './dom.js';
 
 console.log('Memory Game: main.js загружен');
 
@@ -22,13 +24,11 @@ const state = {
   mismatchTimerId: null,
 };
 
-
-
 // ---------- Рендер ----------
 document.body.append(
   createHeader({
-    onNewGame: () => console.log('new game'),
-    onShowLeaderboard: () => console.log('leaderboard'),
+    onNewGame: handleNewGame,
+    onShowLeaderboard: handleLeaderboard,
   }),
   createStats(),
   createBoard()
@@ -78,9 +78,8 @@ function handleCardClick(cardId, cardEl) {
     card.matched = true;
     state.firstCard = null;
 
-    // Победа?
     if (state.matched === TOTAL_PAIRS) {
-      // TODO: finishGame();
+      finishGame();
     }
   } else {
     // Не совпали
@@ -97,4 +96,42 @@ function handleCardClick(cardId, cardEl) {
       state.mismatchTimerId = null;
     }, MISMATCH_DELAY);
   }
+}
+
+// ---------- Победа ----------
+function finishGame() {
+  state.isFinished = true;
+
+  const content = createElement('p', {
+    className: 'win-message',
+    textContent: `Вы нашли все пары за ${state.moves} ходов!`,
+  });
+
+  openModal({
+    title: 'Победа!',
+    content,
+    buttons: [
+      {
+        label: 'Новая игра',
+        onClick: () => {
+          closeModal();
+          handleNewGame();
+        },
+        primary: true,
+      },
+      {
+        label: 'Закрыть',
+        onClick: closeModal,
+      },
+    ],
+  });
+}
+
+// ---------- Кнопки хедера ----------
+function handleNewGame() {
+  console.log('new game — TODO');
+}
+
+function handleLeaderboard() {
+  console.log('leaderboard — TODO');
 }
