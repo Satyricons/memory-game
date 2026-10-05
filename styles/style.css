@@ -159,3 +159,27 @@ body.modal-open {
   font-size: 18px;
   line-height: 1.5;
 }
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 8px 12px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+}
+
+.leaderboard th {
+  font-weight: 600;
+  color: #aaa;
+}
+
+.leaderboard__empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 16px;
+}

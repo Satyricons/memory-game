@@ -6,10 +6,12 @@ import {
   renderBoard,
   flipCardElement,
   updateStats,
+  createLeaderboardContent,
 } from './ui.js';
 import { MISMATCH_DELAY, TOTAL_PAIRS } from './constants.js';
 import { openModal, closeModal } from './modal.js';
 import { createElement } from './dom.js';
+import { saveResult, getLeaderboard } from './leaderboard.js';
 
 console.log('Memory Game: main.js загружен');
 
@@ -101,6 +103,7 @@ function handleCardClick(cardId, cardEl) {
 // ---------- Победа ----------
 function finishGame() {
   state.isFinished = true;
+  saveResult(state.moves);   // ← сохраняем результат
 
   const content = createElement('p', {
     className: 'win-message',
@@ -129,16 +132,13 @@ function finishGame() {
 
 // ---------- Кнопки хедера ----------
 function handleNewGame() {
-  // 1. Отменяем таймер
   if (state.mismatchTimerId !== null) {
     clearTimeout(state.mismatchTimerId);
     state.mismatchTimerId = null;
   }
 
-  // 2. Закрываем модалку
   closeModal();
 
-  // 3. Новая колода
   state.deck = createDeck();
   state.moves = 0;
   state.matched = 0;
@@ -146,17 +146,22 @@ function handleNewGame() {
   state.isLocked = false;
   state.isFinished = false;
 
-  // 4. Очищаем board
   const boardEl = document.querySelector('[data-role="board"]');
-  boardEl.replaceChildren();   // удаляет всех детей разом
-
-  // 5. Рисуем заново
+  boardEl.replaceChildren();
   renderBoard(state.deck);
 
-  // 6. Обновляем счётчики
   updateStats(state.moves, state.matched);
 }
 
 function handleLeaderboard() {
-  console.log('leaderboard — TODO');
+  const results = getLeaderboard();
+  const content = createLeaderboardContent(results);
+
+  openModal({
+    title: 'Таблица лидеров',
+    content,
+    buttons: [
+      { label: 'Закрыть', onClick: closeModal, primary: true },
+    ],
+  });
 }

@@ -1,6 +1,7 @@
 // js/ui.js
 import { createElement } from './dom.js';
 import { TOTAL_PAIRS } from './constants.js';
+import { formatDate } from './leaderboard.js';
 
 /**
  * Хедер с двумя кнопками: «Новая игра» и «Таблица лидеров».
@@ -115,3 +116,44 @@ export function updateStats(moves, matched) {
     pairsEl.textContent = `Пары: ${matched} / ${TOTAL_PAIRS}`;
   }
 }
+
+/**
+ * Строит контент для модалки таблицы лидеров.
+ * @param {Array<{ moves: number, date: string }>} results
+ * @returns {HTMLElement}
+ */
+export function createLeaderboardContent(results) {
+  if (results.length === 0) {
+    return createElement('p', {
+      className: 'leaderboard__empty',
+      textContent: 'Пока нет результатов',
+    });
+  }
+
+  // Заголовок таблицы
+  const headerRow = createElement('tr', {
+    children: [
+      createElement('th', { textContent: 'Место' }),
+      createElement('th', { textContent: 'Ходы' }),
+      createElement('th', { textContent: 'Дата' }),
+    ],
+  });
+
+  // Строки данных
+  const bodyRows = results.map((result, index) => {
+    const place = createElement('td', { textContent: String(index + 1) });
+    const moves = createElement('td', { textContent: String(result.moves) });
+    const date = createElement('td', { textContent: formatDate(result.date) });
+
+    return createElement('tr', { children: [place, moves, date] });
+  });
+
+  const thead = createElement('thead', { children: [headerRow] });
+  const tbody = createElement('tbody', { children: bodyRows });
+
+  return createElement('table', {
+    className: 'leaderboard',
+    children: [thead, tbody],
+  });
+}
+
